@@ -40,9 +40,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    // How do we set the height of an UIView in Interface Builder??
-    //return [[self headerView] bounds].size.height;
-    return 75.0;
+    return [[self headerView] bounds].size.height;
 }
 
 
@@ -109,6 +107,15 @@
     [[cell textLabel] setText:[p description]];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DetailViewController *detailViewController = [[DetailViewController alloc] init];
+    
+    [[self navigationController] pushViewController:detailViewController
+                                          animated:YES];
 }
 
 // DELETE
