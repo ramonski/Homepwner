@@ -61,4 +61,37 @@
 }
 
 
+- (IBAction)takePicture:(UIBarButtonItem *)sender {
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    
+    // if our device has a camera, we want to take a picture, otherwise, we
+    // just pick from the photo library
+    if ([UIImagePickerController
+         isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+    } else {
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }
+    [imagePicker setDelegate:self];
+    
+    // place image picker on the screen
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+# pragma mark UIImagePickerController delegates
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    // get picked image from info dictionary
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    // put that image onto the screen in your image view
+    [imageView setImage:image];
+    
+    // Take image picker off the screen -
+    // you must call this dismiss method
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end
