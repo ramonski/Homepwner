@@ -21,6 +21,13 @@
     [[self view] setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
 }
 
+// overwrite custom setter of item to set the navigation title
+- (void)setItem:(BNRItem *)_item
+{
+    item = _item;
+    [[self navigationItem] setTitle:[item itemName]];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

@@ -22,6 +22,18 @@
 //            BNRItem * p = [[BNRItemStore sharedStore] createItem];
 //            NSLog(@"Created random BNRItem %@", [p itemName]);
 //        }
+        UINavigationItem * n = [self navigationItem];
+        [n setTitle:@"Homepwner"];
+        
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc]
+                        initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                             target:self
+                                             action:@selector(addNewItem:)];
+        
+        // set this bar button item as the right item in the navigationItem
+        [[self navigationItem] setRightBarButtonItem:bbi];
+        
+        [[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
     }
     return self;
 }
@@ -37,43 +49,8 @@
     [[self tableView] reloadData];
 }
 
-# pragma mark UITableViewDelegate methods
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return [self headerView];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return [[self headerView] bounds].size.height;
-}
-
 
 # pragma mark ItemsViewController methods
-
-- (UIView *)headerView
-{
-    if(!headerView) {
-        [[NSBundle mainBundle] loadNibNamed:@"HeaderView" owner:self options:nil];
-    }
-    return headerView;
-}
-
-- (IBAction)toggleEditingMode:(id)sender
-{
-    // If we are currently in Editing mode
-    if ([self isEditing]) {
-        NSLog(@"toggleEditingMode: isEditing=%d", [self isEditing]);
-        [sender setTitle:@"Edit" forState:UIControlStateNormal];
-        // Turn Off editing mode
-        [self setEditing:NO animated:YES];
-    } else {
-        NSLog(@"toggleEditingMode: isEditing=%d", [self isEditing]);
-        [sender setTitle:@"Done" forState:UIControlStateNormal];
-        [self setEditing:YES animated:YES];
-    }
-}
 
 - (IBAction)addNewItem:(id)sender
 {
