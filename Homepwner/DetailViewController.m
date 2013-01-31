@@ -24,6 +24,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    NSLog(@"DetailViewController::viewWillAppear");
+    
     [nameField setText:[item itemName]];
     [serialNumberField setText:[item serialNumber]];
     [valueField setText:[NSString stringWithFormat:@"%d", [item valueInDollars]]];
@@ -35,6 +37,20 @@
     
     // Use filtered NSDate object to set date label contents
     [dateLabel setText:[dateFormatter stringFromDate:[item dateCreated]]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    NSLog(@"DetailViewController::viewWillDisappear");
+    
+    // clear first responder
+    [[self view] endEditing:YES];
+    
+    // Save changes to item
+    [item setItemName:[nameField text]];
+    [item setSerialNumber:[serialNumberField text]];
+    [item setValueInDollars:[[valueField text] intValue]];
 }
 
 

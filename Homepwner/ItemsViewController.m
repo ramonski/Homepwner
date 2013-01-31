@@ -31,6 +31,12 @@
     return [self init];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[self tableView] reloadData];
+}
+
 # pragma mark UITableViewDelegate methods
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -113,6 +119,10 @@
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DetailViewController *detailViewController = [[DetailViewController alloc] init];
+    
+    NSArray *items = [[BNRItemStore sharedStore] allItems];
+    BNRItem *selectedItem = [items objectAtIndex:indexPath.row];
+    [detailViewController setItem:selectedItem];
     
     [[self navigationController] pushViewController:detailViewController
                                           animated:YES];
