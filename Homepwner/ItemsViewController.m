@@ -65,13 +65,15 @@
     // create a new BNRItem and add it to the store
     BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
     
-    // Figure out where that item is in the array
-    int lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
+    DetailViewController *detailViewController = [[DetailViewController alloc]
+                                                  initForNewItem:YES];
     
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:lastRow inSection:0];
-    [[self tableView] insertRowsAtIndexPaths:[NSArray arrayWithObject:ip]
-                            withRowAnimation:UITableViewRowAnimationTop];
-
+    [detailViewController setItem:newItem];
+    
+    UINavigationController *navController = [[UINavigationController alloc]
+                                             initWithRootViewController:detailViewController];
+    
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 # pragma mark UITableViewDataSource protocol methods
@@ -82,6 +84,7 @@
     return [[[BNRItemStore sharedStore] allItems] count];
 }
 
+// GET
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -100,10 +103,11 @@
     return cell;
 }
 
+// SELECT
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DetailViewController *detailViewController = [[DetailViewController alloc] init];
+    DetailViewController *detailViewController = [[DetailViewController alloc] initForNewItem:NO];
     
     NSArray *items = [[BNRItemStore sharedStore] allItems];
     BNRItem *selectedItem = [items objectAtIndex:indexPath.row];

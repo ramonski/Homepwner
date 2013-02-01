@@ -8,13 +8,53 @@
 
 #import "DetailViewController.h"
 #import "BNRItem.h"
+#import "BNRItemStore.h"
 #import "BNRImageStore.h"
 
 
 @implementation DetailViewController
 
-@synthesize item;
 
+@synthesize item;
+// overwrite custom setter of item to set the navigation title
+- (void)setItem:(BNRItem *)_item
+{
+    item = _item;
+    [[self navigationItem] setTitle:[item itemName]];
+}
+
+
+# pragma mark initializers
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)bundle
+{
+    @throw [NSException exceptionWithName:@"Wrong initializer"
+                                   reason:@"use initForNewItem"
+                                 userInfo:nil];
+    return nil;
+}
+
+- (id)initForNewItem:(BOOL)isNew
+{
+    self = [super initWithNibName:@"DetailViewController" bundle:nil];
+    if (self) {
+        if (isNew) {
+            UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
+                                         initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                         target:self action:@selector(save:)];
+            [[self navigationItem] setRightBarButtonItem:doneItem];
+            
+            UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]
+                                           initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                           target:self action:@selector(cancel:)];
+            [[self navigationItem] setLeftBarButtonItem:cancelItem];
+        }
+    }
+    return self;
+}
+
+
+# pragma mark view lifecycle
 
 - (void)viewDidLoad
 {
@@ -24,22 +64,6 @@
         clr = [UIColor colorWithRed:0.875 green:0.88 blue:0.91 alpha:1];
     }
     [[self view] setBackgroundColor:clr];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)io
-{
-    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        return YES;
-    } else {
-        return (io == UIInterfaceOrientationPortrait);
-    }
-}
-
-// overwrite custom setter of item to set the navigation title
-- (void)setItem:(BNRItem *)_item
-{
-    item = _item;
-    [[self navigationItem] setTitle:[item itemName]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -86,6 +110,35 @@
     [item setItemName:[nameField text]];
     [item setSerialNumber:[serialNumberField text]];
     [item setValueInDollars:[[valueField text] intValue]];
+}
+
+
+# pragma mark actions
+
+- (void)save:(id)sender
+{
+    [[self presentingViewController] dismissViewControllerAnimated:YES
+                                                        completion:nil];
+}
+
+- (void)cancel:(id)sender
+{
+    // if the user cancelled, then remove the BNRItem from the store
+    [[BNRItemStore sharedStore] removeItem:item];
+    
+    [[self presentingViewController] dismissViewControllerAnimated:YES
+                                                        completion:nil];
+}
+
+
+// ROTATION
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)io
+{
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return YES;
+    } else {
+        return (io == UIInterfaceOrientationPortrait);
+    }
 }
 
 
@@ -141,6 +194,7 @@
 - (IBAction)backgroundTapped:(id)sender {
     [[self view] endEditing:YES];
 }
+
 
 # pragma mark UIImagePickerController delegates
 

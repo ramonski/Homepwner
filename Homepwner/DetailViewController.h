@@ -26,6 +26,8 @@
 
 @property (nonatomic, strong) BNRItem *item;
 
+- (id)initForNewItem:(BOOL)isNew;
+
 - (IBAction)takePicture:(UIBarButtonItem *)sender;
 - (IBAction)backgroundTapped:(id)sender;
 
