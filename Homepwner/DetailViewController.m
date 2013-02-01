@@ -19,7 +19,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    UIColor *clr = [UIColor groupTableViewBackgroundColor];
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        clr = [UIColor colorWithRed:0.875 green:0.88 blue:0.91 alpha:1];
+    }
+    [[self view] setBackgroundColor:clr];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)io
+{
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return YES;
+    } else {
+        return (io == UIInterfaceOrientationPortrait);
+    }
 }
 
 // overwrite custom setter of item to set the navigation title

@@ -49,6 +49,14 @@
     [[self tableView] reloadData];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)io
+{
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return YES;
+    } else {
+        return (io == UIInterfaceOrientationPortrait);
+    }
+}
 
 # pragma mark ItemsViewController methods
 
