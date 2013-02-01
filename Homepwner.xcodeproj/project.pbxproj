@@ -11,6 +11,7 @@
 		9E250519169CA58C00DA1DA3 /* BNRItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E250518169CA58B00DA1DA3 /* BNRItem.m */; };
 		9E4F6C4F16A3C2B30008E256 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F6C4D16A3C2B30008E256 /* DetailViewController.m */; };
 		9E4F6C5016A3C2B30008E256 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E4F6C4E16A3C2B30008E256 /* DetailViewController.xib */; };
+		9E8F8E2416BAF95A00FA4A3C /* BNRImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F8E2316BAF95A00FA4A3C /* BNRImageStore.m */; };
 		9E94F31B16A28E9400198EF2 /* ItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E94F31A16A28E9400198EF2 /* ItemsViewController.m */; };
 		9ED7E8791693439600A034A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED7E8781693439600A034A1 /* UIKit.framework */; };
 		9ED7E87B1693439600A034A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED7E87A1693439600A034A1 /* Foundation.framework */; };
@@ -31,6 +32,8 @@
 		9E4F6C4C16A3C2B30008E256 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		9E4F6C4D16A3C2B30008E256 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		9E4F6C4E16A3C2B30008E256 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		9E8F8E2216BAF95A00FA4A3C /* BNRImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRImageStore.h; sourceTree = "<group>"; };
+		9E8F8E2316BAF95A00FA4A3C /* BNRImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRImageStore.m; sourceTree = "<group>"; };
 		9E94F31A16A28E9400198EF2 /* ItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemsViewController.m; sourceTree = "<group>"; };
 		9ED7E8741693439600A034A1 /* Homepwner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homepwner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED7E8781693439600A034A1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -93,6 +96,8 @@
 		9E4F6C5416A3C5480008E256 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				9E8F8E2216BAF95A00FA4A3C /* BNRImageStore.h */,
+				9E8F8E2316BAF95A00FA4A3C /* BNRImageStore.m */,
 				9E250513169CA35600DA1DA3 /* BNRItemStore.h */,
 				9E250514169CA35600DA1DA3 /* BNRItemStore.m */,
 			);
@@ -227,6 +232,7 @@
 				9E250519169CA58C00DA1DA3 /* BNRItem.m in Sources */,
 				9E94F31B16A28E9400198EF2 /* ItemsViewController.m in Sources */,
 				9E4F6C4F16A3C2B30008E256 /* DetailViewController.m in Sources */,
+				9E8F8E2416BAF95A00FA4A3C /* BNRImageStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

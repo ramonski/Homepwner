@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "BNRItem.h"
+#import "BNRImageStore.h"
 
 
 @implementation DetailViewController
@@ -44,6 +45,20 @@
     
     // Use filtered NSDate object to set date label contents
     [dateLabel setText:[dateFormatter stringFromDate:[item dateCreated]]];
+    
+    NSString *imageKey = [item imageKey];
+    
+    if (imageKey) {
+        // get image for image key from image store
+        UIImage *imageToDisplay =
+            [[BNRImageStore sharedStore] imageForKey:imageKey];
+        
+        // use that image to put on the screen in imageView
+        [imageView setImage:imageToDisplay];
+    } else {
+        // Clear the imageView
+        [imageView setImage:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -85,6 +100,31 @@
 {
     // get picked image from info dictionary
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    // Create a CFUUID object - it knows how to create aunique indetifier strings
+    //
+    // CF -> Core Foundation (Collection of C Classes)
+    // Ref -> it is a pointer
+    // kCFAllocatorDefault -> let the system decide how to allocate memory
+    CFUUIDRef newUniqueID = CFUUIDCreate(kCFAllocatorDefault);
+    
+    // Create a string of the unique identifier
+    CFStringRef newUniqueIDString =
+        CFUUIDCreateString(kCFAllocatorDefault, newUniqueID);
+    
+    // use that unique ID to set our item's image key
+    // toll free bridging between C to ObjectiveC
+    // that means: instances of classes look exactly the same as their conuterpart in memory
+    NSString *key = (__bridge NSString *)newUniqueIDString;
+    [item setImageKey:key];
+    
+    // store the image in the BNRImageStore with this key
+    [[BNRImageStore sharedStore] setImage:image forKey:[item imageKey]];
+    
+    // Core Foundation objects don't recognize when they loose their owner
+    // => Causes memory leak
+    CFRelease(newUniqueID);
+    CFRelease(newUniqueIDString);
     
     // put that image onto the screen in your image view
     [imageView setImage:image];

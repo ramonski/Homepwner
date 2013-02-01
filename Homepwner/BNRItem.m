@@ -10,7 +10,7 @@
 
 @implementation BNRItem
 
-@synthesize itemName;
+@synthesize itemName, imageKey;
 @synthesize containedItem, container, serialNumber, valueInDollars, dateCreated;
 
 
