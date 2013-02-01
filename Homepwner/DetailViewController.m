@@ -61,9 +61,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIColor *clr = [UIColor groupTableViewBackgroundColor];
+    UIColor *clr = nil;
+    
     if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSLog(@"set iPad background color");
         clr = [UIColor colorWithRed:0.875 green:0.88 blue:0.91 alpha:1];
+    } else {
+        NSLog(@"set iPhone background color");
+        clr = [UIColor groupTableViewBackgroundColor];
     }
     [[self view] setBackgroundColor:clr];
 }
