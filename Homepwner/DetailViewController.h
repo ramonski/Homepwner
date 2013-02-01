@@ -12,6 +12,7 @@
 
 @interface DetailViewController : UIViewController <UINavigationControllerDelegate,
                                                     UITextFieldDelegate,
+                                                    UIPopoverControllerDelegate,
                                                     UIImagePickerControllerDelegate>
 {
     __weak IBOutlet UITextField *nameField;
@@ -19,6 +20,8 @@
     __weak IBOutlet UITextField *valueField;
     __weak IBOutlet UILabel *dateLabel;
     __weak IBOutlet UIImageView *imageView;
+    
+    UIPopoverController *imagePickerPopover;
 }
 
 @property (nonatomic, strong) BNRItem *item;

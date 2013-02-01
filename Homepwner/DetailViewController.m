@@ -89,6 +89,7 @@
 }
 
 
+// TAKE PICTURE
 - (IBAction)takePicture:(UIBarButtonItem *)sender {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
@@ -104,9 +105,39 @@
     [imagePicker setDelegate:self];
     
     // place image picker on the screen
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    if ([imagePickerPopover isPopoverVisible]) {
+        // if the image picker is already up, get rid of it
+        [imagePickerPopover dismissPopoverAnimated:YES];
+        imagePickerPopover = nil;
+        return;
+    }
+    
+    // Check for iPad device before instatiating the popover controller
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        
+        // Create a new popover controller that will display the imagePicker
+        imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+        
+        [imagePickerPopover setDelegate:self];
+        
+        // Display the popover controller;
+        // sender is the camera bar button ite,
+        [imagePickerPopover presentPopoverFromBarButtonItem:sender
+                                   permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                   animated:YES];
+    } else {
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
 }
 
+// DISMISS POPOVER ON IPAD
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    NSLog(@"User dismissed the popover");
+    imagePickerPopover = nil;
+}
+
+// DISMISS KEYBOARD ON BG TAP
 - (IBAction)backgroundTapped:(id)sender {
     [[self view] endEditing:YES];
 }
@@ -156,9 +187,15 @@
     // put that image onto the screen in your image view
     [imageView setImage:image];
     
-    // Take image picker off the screen -
-    // you must call this dismiss method
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        // Take image picker off the screen -
+        // you must call this dismiss method
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        // on ipad, the image picker is in the popover. Dismiss the popover
+        [imagePickerPopover dismissPopoverAnimated:YES];
+        imagePickerPopover = nil;
+    }
 }
 
 # pragma mark UITextFiled delegates
