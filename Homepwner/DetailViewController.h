@@ -11,6 +11,7 @@
 @class BNRItem;
 
 @interface DetailViewController : UIViewController <UINavigationControllerDelegate,
+                                                    UITextFieldDelegate,
                                                     UIImagePickerControllerDelegate>
 {
     __weak IBOutlet UITextField *nameField;
@@ -23,5 +24,6 @@
 @property (nonatomic, strong) BNRItem *item;
 
 - (IBAction)takePicture:(UIBarButtonItem *)sender;
+- (IBAction)backgroundTapped:(id)sender;
 
 @end

@@ -94,10 +94,22 @@
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
+- (IBAction)backgroundTapped:(id)sender {
+    [[self view] endEditing:YES];
+}
+
 # pragma mark UIImagePickerController delegates
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    // check if we have already an image key
+    NSString *oldKey = [item imageKey];
+    if (oldKey) {
+        // Delete the old image
+        [[BNRImageStore sharedStore] deleteImageForKey:oldKey];
+    }
+    
+    
     // get picked image from info dictionary
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
@@ -116,6 +128,8 @@
     // toll free bridging between C to ObjectiveC
     // that means: instances of classes look exactly the same as their conuterpart in memory
     NSString *key = (__bridge NSString *)newUniqueIDString;
+    
+    // set the image key
     [item setImageKey:key];
     
     // store the image in the BNRImageStore with this key
@@ -132,6 +146,14 @@
     // Take image picker off the screen -
     // you must call this dismiss method
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+# pragma mark UITextFiled delegates
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end
