@@ -69,9 +69,16 @@
                                                   initForNewItem:YES];
     
     [detailViewController setItem:newItem];
+    [detailViewController setDismissBlock:^{
+        [[self tableView] reloadData];
+    }];
+    
     
     UINavigationController *navController = [[UINavigationController alloc]
                                              initWithRootViewController:detailViewController];
+    
+    // display the modal window in the middle of the screen and dim the rest out.
+    [navController setModalPresentationStyle:UIModalPresentationFormSheet];
     
     [self presentViewController:navController animated:YES completion:nil];
 }

@@ -14,8 +14,10 @@
 
 @implementation DetailViewController
 
-
+// synthesize properties
 @synthesize item;
+@synthesize dismissBlock;
+
 // overwrite custom setter of item to set the navigation title
 - (void)setItem:(BNRItem *)_item
 {
@@ -118,7 +120,7 @@
 - (void)save:(id)sender
 {
     [[self presentingViewController] dismissViewControllerAnimated:YES
-                                                        completion:nil];
+                                                        completion:dismissBlock];
 }
 
 - (void)cancel:(id)sender
@@ -127,7 +129,7 @@
     [[BNRItemStore sharedStore] removeItem:item];
     
     [[self presentingViewController] dismissViewControllerAnimated:YES
-                                                        completion:nil];
+                                                        completion:dismissBlock];
 }
 
 

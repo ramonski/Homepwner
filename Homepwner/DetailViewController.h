@@ -25,10 +25,12 @@
 }
 
 @property (nonatomic, strong) BNRItem *item;
+@property (nonatomic, copy) void (^dismissBlock)(void);
 
 - (id)initForNewItem:(BOOL)isNew;
 
 - (IBAction)takePicture:(UIBarButtonItem *)sender;
 - (IBAction)backgroundTapped:(id)sender;
+
 
 @end
