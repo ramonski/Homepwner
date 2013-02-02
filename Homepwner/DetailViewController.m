@@ -99,6 +99,10 @@
         
         // use that image to put on the screen in imageView
         [imageView setImage:imageToDisplay];
+        
+        if (![item thumbnailData]) {
+            [item setThumbnailDataFromImage:imageToDisplay];
+        }
     } else {
         // Clear the imageView
         [imageView setImage:nil];

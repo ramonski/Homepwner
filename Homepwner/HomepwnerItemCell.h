@@ -15,4 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *serialNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 
+- (IBAction)showImage:(id)sender;
+
+@property (weak, nonatomic) id controller;
+@property (weak, nonatomic) UITableView *tableView;
+
 @end

@@ -120,6 +120,9 @@
     HomepwnerItemCell *cell = [tableView
             dequeueReusableCellWithIdentifier:@"HomepwnerItemCell"];
     
+    [cell setController:self];
+    [cell setTableView:tableView];
+    
     [[cell thumbnailView] setImage:[p thumbnail]];
     [[cell nameLabel] setText:[p itemName]];
     [[cell serialNumberLabel] setText:[p serialNumber]];
@@ -168,6 +171,11 @@
     [[BNRItemStore sharedStore] moveItemAtIndex:[sourceIndexPath row]
                                         toIndex:[destinationIndexPath row]];
 }
- 
+
+// SHOW IMAGE
+- (void)showImage:(id)sender atIndexPath:(NSIndexPath *)ip
+{
+    NSLog(@"Going to show the image for %@", ip);
+}
 
 @end

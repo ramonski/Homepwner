@@ -17,6 +17,7 @@
 {
     // If there is no thumbnail data, then I have no thumbnail to return
     if (!thumbnailData) {
+        NSLog(@"%@ No thumbnailData", NSStringFromSelector(_cmd));
         return  nil;
     }
     if (!thumbnail) {
@@ -150,7 +151,8 @@
     [aCoder encodeObject:dateCreated forKey:@"ateCreated"];
     [aCoder encodeObject:imageKey forKey:@"imageKey"];
     [aCoder encodeInt:valueInDollars forKey:@"valueInDollars"];
-    [aCoder encodeInt:thumbnailData forKey:@"thumbnailData"];
+    
+    [aCoder encodeObject:thumbnailData forKey:@"thumbnailData"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -162,6 +164,7 @@
         [self setImageKey:[aDecoder decodeObjectForKey:@"imageKey"]];
         [self setValueInDollars:[aDecoder decodeIntForKey:@"valueInDollars"]];
         dateCreated = [aDecoder decodeObjectForKey:@"dateCreated"];
+        
         thumbnailData = [aDecoder decodeObjectForKey:@"thumbnailData"];
     }
     return self;
