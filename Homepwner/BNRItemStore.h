@@ -16,6 +16,9 @@
 
 + (BNRItemStore *)sharedStore;
 
+- (NSString *)itemArchivePath;
+- (BOOL)saveChanges;
+
 - (NSArray *)allItems;
 - (BNRItem *)createItem;
 - (void)removeItem:(BNRItem *)p;

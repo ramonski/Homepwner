@@ -81,4 +81,29 @@
     return descriptionString;
 }
 
+
+# pragma mark NSCoding Protocol
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:itemName forKey:@"itemName"];
+    [aCoder encodeObject:serialNumber forKey:@"serialNumber"];
+    [aCoder encodeObject:dateCreated forKey:@"ateCreated"];
+    [aCoder encodeObject:imageKey forKey:@"imageKey"];
+    [aCoder encodeInt:valueInDollars forKey:@"valueInDollars"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        [self setItemName:[aDecoder decodeObjectForKey:@"itemName"]];
+        [self setSerialNumber:[aDecoder decodeObjectForKey:@"serialNumber"]];
+        [self setImageKey:[aDecoder decodeObjectForKey:@"imageKey"]];
+        [self setValueInDollars:[aDecoder decodeIntForKey:@"valueInDollars"]];
+        dateCreated = [aDecoder decodeObjectForKey:@"dateCreated"];
+    }
+    return self;
+}
+
 @end

@@ -67,4 +67,34 @@
 }
 
 
+- (NSString *)itemArchivePath
+{
+    NSArray *documentDirectories =
+        NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                            NSUserDomainMask,
+                                            YES);
+    
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    
+    return [documentDirectory stringByAppendingPathComponent:@"items.archive"];
+}
+
+- (BOOL)saveChanges
+{
+    // returns success or failure
+    NSString *path = [self itemArchivePath];
+    
+    return [NSKeyedArchiver archiveRootObject:allItems toFile:path];
+}
+
+
+
+
+
+
+
+
+
+
+
 @end
