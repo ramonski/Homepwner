@@ -79,6 +79,11 @@
     
     // display the modal window in the middle of the screen and dim the rest out.
     [navController setModalPresentationStyle:UIModalPresentationFormSheet];
+    
+    // interrupt the oldest-ancestor behaviour
+    // [navController setModalPresentationStyle:UIModalPresentationCurrentContext];
+    //[self setDefinesPresentationContext:YES];
+    
     [navController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     
     [self presentViewController:navController animated:YES completion:nil];
