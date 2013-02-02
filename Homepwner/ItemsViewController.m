@@ -73,7 +73,7 @@
 
 # pragma mark ItemsViewController methods
 
-- (IBAction)addNewItem:(id)sender
+- (void)addNewItem:(id)sender
 {
     // create a new BNRItem and add it to the store
     BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
