@@ -84,7 +84,7 @@
     // [navController setModalPresentationStyle:UIModalPresentationCurrentContext];
     //[self setDefinesPresentationContext:YES];
     
-    [navController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [navController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     
     [self presentViewController:navController animated:YES completion:nil];
 }
