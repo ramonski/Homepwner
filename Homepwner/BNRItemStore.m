@@ -7,6 +7,7 @@
 //
 
 #import "BNRItemStore.h"
+#import "BNRImageStore.h"
 #import "BNRItem.h"
 
 @implementation BNRItemStore
@@ -53,6 +54,11 @@
 
 - (void)removeItem:(BNRItem *)p
 {
+    // remove image
+    NSString *key = [p imageKey];
+    [[BNRImageStore sharedStore] deleteImageForKey:key];
+    
+    // delete item from store
     [allItems removeObjectIdenticalTo:p];
 }
 
