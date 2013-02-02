@@ -9,6 +9,7 @@
 #import "ItemsViewController.h"
 #import "BNRItemStore.h"
 #import "BNRItem.h"
+#import "HomepwnerItemCell.h"
 
 @implementation ItemsViewController
 
@@ -47,6 +48,18 @@
 {
     [super viewWillAppear:animated];
     [[self tableView] reloadData];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Load the nib file
+    UINib *nib = [UINib nibWithNibName:@"HomepwnerItemCell" bundle:nil];
+    
+    // Register this nib which contains the cell
+    [[self tableView] registerNib:nib
+           forCellReuseIdentifier:@"HomepwnerItemCell"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)io
@@ -101,17 +114,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Check for a reusable cell first
-    UITableViewCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                   reuseIdentifier:@"UITableViewCell"];
-    }
-    
     BNRItem *p = [[[BNRItemStore sharedStore] allItems] objectAtIndex:[indexPath row]];
-    [[cell textLabel] setText:[p description]];
+    
+    // Get the new or recycled cell
+    HomepwnerItemCell *cell = [tableView
+            dequeueReusableCellWithIdentifier:@"HomepwnerItemCell"];
+    
+    [[cell nameLabel] setText:[p itemName]];
+    [[cell serialNumberLabel] setText:[p serialNumber]];
+    [[cell valueLabel] setText:[NSString stringWithFormat:@"$%d", [p valueInDollars]]];
     
     return cell;
 }
