@@ -205,7 +205,8 @@
 
 # pragma mark UIImagePickerController delegates
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     // check if we have already an image key
     NSString *oldKey = [item imageKey];
@@ -214,9 +215,10 @@
         [[BNRImageStore sharedStore] deleteImageForKey:oldKey];
     }
     
-    
     // get picked image from info dictionary
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [item setThumbnailDataFromImage:image];
     
     // Create a CFUUID object - it knows how to create aunique indetifier strings
     //

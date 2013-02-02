@@ -120,6 +120,7 @@
     HomepwnerItemCell *cell = [tableView
             dequeueReusableCellWithIdentifier:@"HomepwnerItemCell"];
     
+    [[cell thumbnailView] setImage:[p thumbnail]];
     [[cell nameLabel] setText:[p itemName]];
     [[cell serialNumberLabel] setText:[p serialNumber]];
     [[cell valueLabel] setText:[NSString stringWithFormat:@"$%d", [p valueInDollars]]];
