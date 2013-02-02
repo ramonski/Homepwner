@@ -28,7 +28,12 @@
 {
     self = [super init];
     if (self) {
-        allItems = [[NSMutableArray alloc] init];
+        // load items
+        NSString *path = [self itemArchivePath];
+        allItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        if (!allItems) {
+            allItems = [[NSMutableArray alloc] init];
+        }
     }
     return self;
 }
@@ -40,7 +45,8 @@
 
 - (BNRItem *)createItem
 {
-    BNRItem *p = [BNRItem randomItem];
+    // BNRItem *p = [BNRItem randomItem];
+    BNRItem *p = [[BNRItem alloc] init];
     [allItems addObject:p];
     return p;
 }
