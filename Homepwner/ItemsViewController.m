@@ -8,8 +8,10 @@
 
 #import "ItemsViewController.h"
 #import "BNRItemStore.h"
+#import "BNRImageStore.h"
 #import "BNRItem.h"
 #import "HomepwnerItemCell.h"
+#import "ImageViewController.h"
 
 @implementation ItemsViewController
 
@@ -175,7 +177,45 @@
 // SHOW IMAGE
 - (void)showImage:(id)sender atIndexPath:(NSIndexPath *)ip
 {
-    NSLog(@"Going to show the image for %@", ip);
+    // Get the item for the index path
+    BNRItem *i = [[[BNRItemStore sharedStore] allItems] objectAtIndex:[ip row]];
+    NSString * imageKey = [i imageKey];
+    
+    // If there is no image, we don't need to display anything
+    UIImage *img = [[BNRImageStore sharedStore] imageForKey:imageKey];
+    if (!img)
+        return;
+
+    // Create a new ImageViewController and set its image
+    ImageViewController *ivc = [[ImageViewController alloc] init];
+    [ivc setImage:img];
+    
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSLog(@"Show image on iPad");
+        CGRect rect = [[self view] convertRect:[sender bounds] fromView:sender];
+        
+        // Present a 600x600 popover from the rect
+        imagePopover = [[UIPopoverController alloc]
+                        initWithContentViewController:ivc];
+        
+        [imagePopover setDelegate:self];
+        [imagePopover setPopoverContentSize:CGSizeMake(600, 600)];
+        
+        [imagePopover presentPopoverFromRect:rect
+                                      inView:[self view]
+                    permittedArrowDirections:UIPopoverArrowDirectionAny
+                                    animated:YES];
+    } else {
+        NSLog(@"Show image on iPhone");
+//        [self presentViewController:ivc animated:YES completion:nil];
+    }
+    
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    [imagePopover dismissPopoverAnimated:YES];
+    imagePopover = nil;
 }
 
 @end

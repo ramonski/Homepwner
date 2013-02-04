@@ -29,8 +29,6 @@
     
     NSIndexPath *indexPath = [[self tableView] indexPathForCell:self];
     if (indexPath) {
-        NSLog(@"%@ - indexPath=%@", NSStringFromSelector(_cmd), indexPath);
-        
         if ([[self controller] respondsToSelector:newSelector]) {
             [[self controller] performSelector:newSelector
                                     withObject:sender
