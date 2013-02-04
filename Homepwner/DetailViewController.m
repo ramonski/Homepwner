@@ -10,6 +10,7 @@
 #import "BNRItem.h"
 #import "BNRItemStore.h"
 #import "BNRImageStore.h"
+#import "AssetPicker.h"
 
 
 @implementation DetailViewController
@@ -88,7 +89,11 @@
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
     // Use filtered NSDate object to set date label contents
-    [dateLabel setText:[dateFormatter stringFromDate:[item dateCreated]]];
+    // [dateLabel setText:[dateFormatter stringFromDate:[item dateCreated]]];
+    
+    // Convert time interval to NSDate
+    NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:[item dateCreated]];
+    [dateLabel setText:[dateFormatter stringFromDate:date]];
     
     NSString *imageKey = [item imageKey];
     
@@ -104,6 +109,12 @@
         // Clear the imageView
         [imageView setImage:nil];
     }
+    NSString *typeLabel = [[item assetType] valueForKey:@"label"];
+    if (!typeLabel)
+        typeLabel = @"None";
+    
+    [assetTypeButton setTitle:[NSString stringWithFormat:@"Type: %@", typeLabel]
+                     forState:UIControlStateNormal];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -201,6 +212,16 @@
 // DISMISS KEYBOARD ON BG TAP
 - (IBAction)backgroundTapped:(id)sender {
     [[self view] endEditing:YES];
+}
+
+// show asset type picker
+- (IBAction)showAssetTypePicker:(id)sender {
+    [[self view] endEditing:YES];
+    AssetPicker *assetPicker = [[AssetPicker alloc] init];
+    [assetPicker setItem:item];
+    
+    [[self navigationController] pushViewController:assetPicker
+                                           animated:YES];
 }
 
 
